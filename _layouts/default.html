@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-
 <html>
 
-{% include head.html %}
+  {% include head.html %}
 
-<body>
+  <body>
 
-  {% include navbar.html %}
+    {% if page.path contains '_posts' %}
+      {% assign words = content | number_of_words %}
+      {% if words <= 90 %}
+      {% assign reading-time = "1m" %}
+      {% elsif words < 270 %}
+      {% assign reading-time = "1m" %}
+      {% else %}
+      {% assign reading-time = words | divided_by:180 | append:"m" %}
+      {% endif %}
+    {% endif %}
 
-  {{ content }}
+    {% include header.html %}
 
-  {% include footer.html %}
+    <a class="paper-button {% if page.home == true %}btn-left" href="#home"{% else %}btn-down" href="{{site.baseurl}}/"{% endif %}></a>
 
-  {% include scripts.html %}
+    <section class="page-content">
+        {{ content }}
+    </section>
 
-  {% include google-analytics.html %}
+    {% include footer.html %}
 
-</body>
+  </body>
 
 </html>
